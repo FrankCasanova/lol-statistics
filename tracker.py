@@ -5,7 +5,10 @@ import bisect
 from setting import MMR_HEADERS, DEFAULT_HEADERS
 
 #TODO:
-#CREATE IF STATEMENT FOR EACH URL IN ORDER TO GIVE TO EACH WEBSITE THE PROPER HEADER INFORMATION
+#1. install fastapi
+#2. install uvicorn
+#3. create an endpoint for the tracker
+#4. create the frontend
 
 
 
