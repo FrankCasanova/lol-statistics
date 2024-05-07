@@ -10,7 +10,7 @@ from setting import MMR_HEADERS, DEFAULT_HEADERS
 #3. create an endpoint for the tracker
 #4. create the frontend
 
-
+proxy = "http://41.89.16.6:80"
 
 async def get_html(url: str, headers: dict) -> HTMLParser:
     """
@@ -22,7 +22,7 @@ async def get_html(url: str, headers: dict) -> HTMLParser:
     Returns:
         HTMLParser: A HTMLParser object for the HTML content of the specified URL.
     """
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(proxies={"http://": proxy}, verify=False, timeout=None) as client:
         response: httpx.Response = await client.get(url, headers=headers)
         return HTMLParser(response.text)
     
