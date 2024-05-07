@@ -5,6 +5,7 @@ import bisect
 from setting import MMR_HEADERS, DEFAULT_HEADERS
 
 #TODO:
+#URGENT, TRACKER HAS AN API, WE NEED THE WAY TO TAKE THE DATA FROM THE API
 #1. install fastapi
 #2. install uvicorn
 #3. create an endpoint for the tracker
