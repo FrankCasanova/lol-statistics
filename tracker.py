@@ -23,7 +23,9 @@ async def get_html(url: str, headers: dict) -> HTMLParser:
         HTMLParser: A HTMLParser object for the HTML content of the specified URL.
     """
     async with httpx.AsyncClient(proxies={"http://": proxy}, verify=False, timeout=None) as client:
+        print(f'stablishing connection... to {url} using proxy {proxy}')
         response: httpx.Response = await client.get(url, headers=headers)
+        print(f'connection established, status: {response.status_code}')
         return HTMLParser(response.text)
     
 async def get_json_data(url, headers: dict) -> dict:
@@ -113,7 +115,6 @@ async def wiki_info(top_1_used_champ: str) -> dict[str, str]:
     """
     try:
         url = f'https://leagueoflegends.fandom.com/wiki/{top_1_used_champ}/LoL#Hide_'
-        print(url)
         html = await get_html(url, DEFAULT_HEADERS)
         
         lore = html.css_first('div.skinviewer-info-lore > div:nth-child(1)').text()
@@ -138,7 +139,6 @@ async def ingsingfull_info(top_1_used_champ: str) -> dict[str, str]:
     """
     try:
         url = f'https://lolalytics.com/lol/{top_1_used_champ}/build/'.lower()
-        print(url)
         html = await get_html(url, DEFAULT_HEADERS)
         brief_summary = html.css_first('div.flex-1 > p').text()
         
@@ -185,4 +185,4 @@ async def main(name: str) -> dict[str, dict]:
     }
        
 if __name__ == "__main__":
-    print(asyncio.run(main('CHADUDYR#UDYR')))
+    print(asyncio.run(main('Twitch Oskr1938#1938')))
