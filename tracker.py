@@ -66,8 +66,18 @@ async def champ_info(name: str) -> dict[str, str]:
     Returns:
         dict[str, str]: A dictionary containing the champion information. The keys are 'name', 'win_rate', 'rank', 'lp', 'top_1_used_champ', 'top_2_used_champ', 'main_role', 'player_score', 'kill_participation', 'objetive_participation', and 'xp_diff_vs_enemy'.
     """
-    url = f'https://tracker.gg/lol/profile/riot/EUW/{name}/overview?playlist=RANKED_SOLO_5x5'.replace('#', '%23').replace(' ', '%20')
-    html = await get_html(url, DEFAULT_HEADERS)
+    retry_count = 3
+    while retry_count > 0:
+        
+        url = f'https://tracker.gg/lol/profile/riot/EUW/{name}/overview?playlist=RANKED_SOLO_5x5'.replace('#', '%23').replace(' ', '%20')
+        html = await get_html(url, DEFAULT_HEADERS)
+        
+        if not html.css_first('span.fit-text-parent > span'):
+            retry_count -= 1
+            continue
+        else:
+            break
+    
     
     keys = [
         ('name', 'span.fit-text-parent > span'),
