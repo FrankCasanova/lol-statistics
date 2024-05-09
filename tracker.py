@@ -14,41 +14,6 @@ from asyncio import WindowsSelectorEventLoopPolicy
 
 asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
-# async def get_html(url: str, headers: dict) -> HTMLParser:
-#     """
-#     Returns a HTMLParser object for the HTML content of the specified URL.
-
-#     Args:
-#         url (str): The URL to get the HTML from.
-#         headers (dict): Headers to be included in the request.
-
-#     Returns:
-#         HTMLParser: A HTMLParser object for the HTML content of the specified URL.
-#     """
-#     try:
-#         async with AsyncSession(impersonate='edge101') as client:
-#             print(f'Establishing connection to {url}...')
-#             response = await client.get(url, headers=headers)
-#             print(f'Connection established, status: {response.status_code}')
-            
-#             # Validate response status code
-#             if response.status_code == 200:
-#                 return HTMLParser(response.text)
-#             else:
-#                 # Handle non-200 status codes
-#                 raise Exception(f'Request to {url} failed with status code: {response.status_code}')
-#     except Exception as e:
-#         # Handle exceptions gracefully
-#         print(f'An error occurred: {e}')
-#         return None  # Or raise an exception based on your error handling strategy
-    
-# async def get_json_data(url, headers: dict) -> dict:
-#     async with AsyncSession(impersonate='edge101') as client:
-#         response = await client.get(url, headers=headers)
-#         response.raise_for_status()  # Raises an exception if the request was unsuccessful
-#         json_data = response.json()
-#         return json_data
-
 def get_rank(mmr):
     thresholds = [125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375, 1500, 1625, 1750, 1875, 2000, 2125, 2250, 2375, 2500, 2625, 2750, 2875, 3000, 3125, 3250, 3375, 3500, 4000, 5000]
     ranks = ['iron-iv', 'iron-iii', 'iron-ii', 'iron-i', 'bronze-iv', 'bronze-iii', 'bronze-ii', 'bronze-i', 'silver-iv', 'silver-iii', 'silver-ii', 'silver-i', 'gold-iv', 'gold-iii', 'gold-ii', 'gold-i', 'platinum-iv', 'platinum-iii', 'platinum-ii', 'platinum-i', 'emerald-iv', 'emerald-iii', 'emerald-ii', 'emerald-i', 'diamond-iv', 'diamond-iii', 'diamond-ii', 'diamond-i', 'master', 'grandmaster', 'challenger']
@@ -181,9 +146,9 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         top_5_best_wr_with_champ = []
         for i in range(5):
             champ_info = {
-                'name': html.css_first(f'div.mx-auto.w-\[95\%\].text-center.text-\[12px\] > div:nth-child({i+2}) > div.flex.w-\[100px\].flex-none.items-center.justify-center.truncate > a').text(),
-                'wr': html.css_first(f'div.mx-auto.w-\[95\%\].text-center.text-\[12px\] > div:nth-child({i+2}) > div.flex.w-8.flex-none.items-center.justify-center').text(),
-                'region': html.css_first(f'div.mx-auto.w-\[95\%\].text-center.text-\[12px\] > div:nth-child({i+2}) > div.w-\[35px\].flex-none > div > div').text()
+                'name': html.css_first(f'div:nth-child({i+2}) > div.flex.w-\[100px\].flex-none.items-center.justify-center.truncate > a').text(),
+                'wr': html.css_first(f'div:nth-child({i+2}) > div.flex.w-8.flex-none.items-center.justify-center').text(),
+                'region': html.css_first(f'div:nth-child({i+2}) > div.w-\[35px\].flex-none > div > div').text()
             }       
             top_5_best_wr_with_champ.append(champ_info)
 
