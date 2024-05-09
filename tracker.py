@@ -77,12 +77,13 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
         ('xp_diff_vs_enemy', 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(4) > div.stat__value'),
         ('profile_image', 'div.user-avatar.user-avatar--large.ph-avatar > img.user-avatar__image'),
         ('rank_image', 'div.trn-profile-highlighted-content__stats > img'),
-        ('top_1_used_champ_image', 'div.champions__list > div:nth-child(1) > div.icon.cursor-pointer > img'),	
+        ('top_1_used_champ_image', 'div.champions__list > div:nth-child(1) > div.icon.cursor-pointer > img'),
+        ('top_2_used_champ_image', 'div.champions__list > div:nth-child(2) > div.icon.cursor-pointer > img'),	
     ]
     
     result = {}
     for key, selector in keys:
-        if key == 'rank_image' or key == 'profile_image' or key == 'top_1_used_champ_image':
+        if key == 'rank_image' or key == 'profile_image' or key == 'top_1_used_champ_image' or key == 'top_2_used_champ_image':
             result[key] = html.css_first(selector).attributes['src']
             continue
         try:
