@@ -60,7 +60,9 @@ async def mmr(name: str, session: AsyncSession) -> dict:
     try:
         url = f"https://api.mylolmmr.com/api/mmr/euw1/{name}/420".replace('#', '%40').replace(' ', '%20')
         # json_data = await get_json_data(url, MMR_HEADERS)
+        print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=MMR_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
         json_data = response.json()
         mmr = json_data["mmr"]
         rank = get_rank(mmr)
@@ -88,12 +90,14 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
         
     url = f'https://tracker.gg/lol/profile/riot/EUW/{name}/overview?playlist=RANKED_SOLO_5x5'.replace('#', '%23').replace(' ', '%20')
     # html = await get_html(url, DEFAULT_HEADERS)
+    print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)
+    print(f'Connection established, status: {response.status_code}')
     html = HTMLParser(response.text)
     
     while not html.css_first('span.fit-text-parent > span'):
         await asyncio.sleep(5)
-        html = await get_html(url, DEFAULT_HEADERS)
+        html = await session.get(url, helpers=DEFAULT_HEADERS)
         
     
     keys = [
@@ -117,6 +121,7 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
         except:
             result[key] = f'{key.capitalize()} Not Found'
     result['rank_image'] = f'https://trackercdn.com/cdn/tracker.gg/lol/ranks/2022/{result["rank"].lower().split()[0]}.png'
+    result['profile_image'] = html.css_first('#app > div.trn-wrapper > div.trn-container > div > main > div.content.no-card-margin > div.ph > div.ph__container > div.user-avatar.user-avatar--large.ph-avatar > img.user-avatar__image').get_attr('src')
     return result
         
 
@@ -133,8 +138,10 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
     """
     try:
         url = f'https://leagueoflegends.fandom.com/wiki/{top_1_used_champ}/LoL#Hide_'
+        print(f'Establishing connection to {url}...')
         # html = await get_html(url, DEFAULT_HEADERS)
         response = await session.get(url, headers=DEFAULT_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
         html = HTMLParser(response.text)
         
         lore = html.css_first('div.skinviewer-info-lore > div:nth-child(1)').text()
@@ -160,7 +167,9 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
     try:
         url = f'https://lolalytics.com/lol/{top_1_used_champ}/build/'.lower()
         # html = await get_html(url, DEFAULT_HEADERS)
+        print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
         html = HTMLParser(response.text)
         
         brief_summary = html.css_first('div.flex-1 > p').text()
