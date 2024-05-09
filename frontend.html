@@ -1,93 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="style.css">
-<title>League of Legends Player Summary</title>
-</style>
+    <title>Player Profile - Twitch Oskr1938</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Add your CSS file here -->
 </head>
 <body>
-<div class="container">
-  <div class="profile-header section">
-    <img src="https://imgsvc.trackercdn.com/url/size(128),fit(cover)/https%3A%2F%2Ftrackercdn.com%2Fddragon%2Fcdn%2F14.9.1%2Fimg%2Fprofileicon%2F3374.png/image.jpg" alt="Profile Image" class="profile-image">
-    <div>
-      <h1>Twitch Oskr1938</h1>
-      <div class="section">
-        <h2 class="section-title">MMR</h2>
-        <p>3017 - Diamond IV</p>
-      </div>
-      <img src="https://trackercdn.com/cdn/tracker.gg/lol/ranks/2022/emerald.png" alt="Rank Image" class="rank-image">
-      <p>Emerald I - 59LP</p>
-    </div>
-  </div>
-
-  <div class="statistics section">
-    <div class="stat">
-      <h2>Win Rate:</h2>
-      <p>53.8%</p>
-    </div>
-    <div class="stat">
-      <h2>Player Score:</h2>
-      <p>429 /1000</p>
-    </div>
-    <div class="stat">
-      <h2>Main Role:</h2>
-      <p>Top</p>
-    </div>
-    <div class="section">
-        <h2 class="section-title">In-Game Statistics</h2>
-        <p>Kill Participation: 32.7%</p>
-        <p>Objective Participation: 38.4%</p>
-        <p>XP Diff vs Enemy: 4.0%</p>
-      </div>
-      <div class="section">
-        <h2 class="section-title">Top Used Champions</h2>
-        <img src="https://trackercdn.com/cdn/tracker.gg/lol/champions/420/icon.png" alt="Top 1 Used Champion" class="champion-image">
-        <p>Illaoi</p>
-        <img src="https://trackercdn.com/cdn/tracker.gg/lol/champions/36/icon.png" alt="Top 2 Used Champion" class="champion-image">
-        <p>Dr. Mundo</p>
-      </div>
-  </div>
-  
-  
-
-  
-
-  <div class="section">
-    <h2 class="section-title">Lore</h2>
-    <div class="lore">
-      <p>"Illaoi’s powerful physique is
-         dwarfed only by her indomitable faith.
-          As the prophet of the Great Kraken, she uses a huge,
-           golden idol to rip her foes’
-            spirits from their bodies and shatter their perception of
-             reality. All who challenge the 'Truth Bearer of Nagakabouros'
-            soon discover Illaoi never battles alone—the god of the Serpent
-             Isles fights by her side."</p>
-    </div>
-  </div>
-  <div class="section">
-    <h2 class="section-title">In-Depth Champion Analysis</h2>
-    <div class="champion-analysis">
-      <p><strong>Brief Summary:</strong> "Illaoi top has a 51.44% win rate in Emerald+ on Patch 14.9 coming in at rank 65 of 96 and graded C+ Tier on the LoL Tierlist. Illaoi top is a strong counter to K'Sante, Wukong & Olaf while Illaoi is countered most by Twisted Fate, Kayle & Poppy. The best Illaoi players have a 54.46% win rate with an average rank of Diamond I on the Illaoi Leaderboard."</p>
-      <p><strong>Detailed Performance:</strong> "Analyzing 2,578 games played by the top 471 Illaoi players worldwide over the last 7 days. The average rank of these top Illaoi players was Diamond I. Taking into account win rate and summoner rank Illaoi is ranked 156 amongst all champions in the hands of an expert."</p>
-      <h3>Top 5 Best Win Rates with Champion</h3>
-      <ul>
-        <li>Ayel#0001 - 65% Win Rate - BR Region</li>
-        <li>bitzli besser#321 - 68% Win Rate - EUW Region</li>
-        <li>Twink#tight - 65% Win Rate - EUW Region</li>
-        <li>Belerick#TR1 - 64% Win Rate - TR Region</li>
-        <li>Wufo#001 - 72% Win Rate - EUW Region</li>
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="section">
-    <h2 class="section-title">MMR</h2>
-    <p>3017 - Diamond IV</p>
-  </div>
-</div>
+    <header>
+        <h1>Player Profile - Twitch Oskr1938</h1>
+    </header>
+    <main>
+        <section class="player-info">
+            <h2>Player Information</h2>
+            <div class="player-image">
+                <img src="{{ profile_image }}" alt="Player Profile Image">
+            </div>
+            <ul>
+                <li><strong>Rank:</strong> {{ rank }}</li>
+                <li><strong>LP:</strong> {{ lp }}</li>
+                <li><strong>Main Role:</strong> {{ main_role }}</li>
+            </ul>
+        </section>
+        <section class="champion-info">
+            <h2>Champion Information</h2>
+            <div class="champion-image">
+                <img src="{{ top_1_used_champ_image }}" alt="Top 1 Used Champion Icon">
+            </div>
+            <ul>
+                <li><strong>Top 1 Used Champion:</strong> {{ top_1_used_champ }}</li>
+                <li><strong>Top 2 Used Champion:</strong> {{ top_2_used_champ }}</li>
+            </ul>
+        </section>
+        <section class="performance-stats">
+            <h2>Performance Stats</h2>
+            <ul>
+                <li><strong>Win Rate:</strong> {{ win_rate }}</li>
+                <li><strong>Player Score:</strong> {{ player_score }}</li>
+                <li><strong>Kill Participation:</strong> {{ kill_participation }}%</li>
+                <li><strong>Objective Participation:</strong> {{ objective_participation }}%</li>
+                <li><strong>XP Diff vs Enemy:</strong> {{ xp_diff_vs_enemy }}%</li>
+            </ul>
+        </section>
+        <section class="rank-and-mmr">
+            <h2>Rank and MMR</h2>
+            <ul>
+                <li><strong>Rank Image:</strong> <img class="rank-image" src="{{ rank_image }}" alt="Rank Image"></li>
+                <li><strong>MMR:</strong> {{ mmr }}</li>
+            </ul>
+        </section>
+        <section class="top-5-best-wr-with-champ">
+            <h2>Top 5 Best Win Rates with Champion</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player Name</th>
+                        <th>Win Rate</th>
+                        <th>Region</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in ingsingfull_info.top_5_best_wr_with_champ %}
+                    <tr>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.wr }}%</td>
+                        <td>{{ player.region }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <section class="champion-lore">
+            <h2>Champion Lore</h2>
+            <p>{{ wiki_info.lore }}</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Frank Casanova</p>
+    </footer>
 </body>
+<script src="scripts.js"></script>
 </html>

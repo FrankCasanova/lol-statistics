@@ -2,6 +2,7 @@
 import asyncio  
 from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
+import json
 from curl_cffi.requests import AsyncSession
 from setting import MMR_HEADERS, DEFAULT_HEADERS
 from asyncio import WindowsSelectorEventLoopPolicy
@@ -105,7 +106,7 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
         dict[str, str]: A dictionary containing the wiki information. The keys are 'lore' and the value is a string.
     """
     try:
-        url = f'https://leagueoflegends.fandom.com/wiki/{top_1_used_champ}/LoL#Hide_'
+        url = f'https://leagueoflegends.fandom.com/wiki/{top_1_used_champ.replace(" ", "_")}/LoL#Hide_'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -132,7 +133,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         dict[str, str]: A dictionary containing the brief summary.
     """
     try:
-        url = f'https://lolalytics.com/lol/{top_1_used_champ}/build/'.lower()
+        url = f'https://lolalytics.com/lol/{top_1_used_champ.lower().replace(" ", "")}/build/'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -191,4 +192,11 @@ async def main(name: str) -> dict[str, dict]:
         print(f'An error occurred in the main function: {e}')
         return {}
 if __name__ == "__main__":
-    print(asyncio.run(main('Twitch Oskr1938#1938')))
+    with open('result.json', 'w') as file:
+        file.write('')
+    
+    result = asyncio.run(main('CHADUDYR#UDYR'))
+    
+    with open('result.json', 'a') as file:
+        json.dump(result, file)
+    
