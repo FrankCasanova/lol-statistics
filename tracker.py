@@ -110,18 +110,22 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
         ('main_role', 'div > div.role__wr > div.role__role'),
         ('player_score', 'div.score__text > div.value'),
         ('kill_participation', 'div.performance-score__stats > div:nth-child(2) > div.stat__value'),
-        ('objetive_participation', '#app > div.trn-wrapper > div.trn-container > div > main > div.content.no-card-margin > div.site-container.trn-grid.trn-grid--vertical.trn-grid--small > div.trn-grid.container > div.trn-grid.content > div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(3) > div.stat__value'),
-        ('xp_diff_vs_enemy', '#app > div.trn-wrapper > div.trn-container > div > main > div.content.no-card-margin > div.site-container.trn-grid.trn-grid--vertical.trn-grid--small > div.trn-grid.container > div.trn-grid.content > div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(4) > div.stat__value'),
+        ('objetive_participation', 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(3) > div.stat__value'),
+        ('xp_diff_vs_enemy', 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(4) > div.stat__value'),
+        ('profile_image', 'div.user-avatar.user-avatar--large.ph-avatar > img.user-avatar__image'),
+        ('rank_image', 'div.trn-profile-highlighted-content__stats > img'),
+        ('top_1_used_champ_image', 'div.champions__list > div:nth-child(1) > div.icon.cursor-pointer > img'),	
     ]
     
     result = {}
     for key, selector in keys:
+        if key == 'rank_image' or key == 'profile_image' or key == 'top_1_used_champ_image':
+            result[key] = html.css_first(selector).attributes['src']
+            continue
         try:
             result[key] = html.css_first(selector).text()
         except:
             result[key] = f'{key.capitalize()} Not Found'
-    result['rank_image'] = f'https://trackercdn.com/cdn/tracker.gg/lol/ranks/2022/{result["rank"].lower().split()[0]}.png'
-    result['profile_image'] = html.css_first('#app > div.trn-wrapper > div.trn-container > div > main > div.content.no-card-margin > div.ph > div.ph__container > div.user-avatar.user-avatar--large.ph-avatar > img.user-avatar__image').get_attr('src')
     return result
         
 
@@ -173,9 +177,26 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         html = HTMLParser(response.text)
         
         brief_summary = html.css_first('div.flex-1 > p').text()
+        data_about_champ = html.css_first('div:nth-child(7) > div > h2').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > h1').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(1)').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(2)').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(3)').text()
+        top_5_best_wr_with_champ = []
+        for i in range(5):
+            champ_info = {
+                'name': html.css_first(f'div.mx-auto.w-\[95\%\].text-center.text-\[12px\] > div:nth-child({i+2}) > div.flex.w-\[100px\].flex-none.items-center.justify-center.truncate > a').text(),
+                'wr': html.css_first(f'div.mx-auto.w-\[95\%\].text-center.text-\[12px\] > div:nth-child({i+2}) > div.flex.w-8.flex-none.items-center.justify-center').text(),
+                'region': html.css_first(f'div.mx-auto.w-\[95\%\].text-center.text-\[12px\] > div:nth-child({i+2}) > div.w-\[35px\].flex-none > div > div').text()
+            }       
+            top_5_best_wr_with_champ.append(champ_info)
+
+            
         
         return {
-            'brief_summary': brief_summary 
+            'brief_summary': brief_summary,
+            'data_about_champ': data_about_champ,
+            'top_5_best_wr_with_champ': top_5_best_wr_with_champ 
         }
     except:
         return {'error': 'there was some trouble fetching the brief summary'}
