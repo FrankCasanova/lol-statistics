@@ -59,7 +59,6 @@ def get_rank(mmr):
 async def mmr(name: str, session: AsyncSession) -> dict:
     try:
         url = f"https://api.mylolmmr.com/api/mmr/euw1/{name}/420".replace('#', '%40').replace(' ', '%20')
-        # json_data = await get_json_data(url, MMR_HEADERS)
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=MMR_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -89,7 +88,6 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
     
         
     url = f'https://tracker.gg/lol/profile/riot/EUW/{name}/overview?playlist=RANKED_SOLO_5x5'.replace('#', '%23').replace(' ', '%20')
-    # html = await get_html(url, DEFAULT_HEADERS)
     print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)
     print(f'Connection established, status: {response.status_code}')
@@ -143,7 +141,6 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
     try:
         url = f'https://leagueoflegends.fandom.com/wiki/{top_1_used_champ}/LoL#Hide_'
         print(f'Establishing connection to {url}...')
-        # html = await get_html(url, DEFAULT_HEADERS)
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
         html = HTMLParser(response.text)
@@ -170,7 +167,6 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
     """
     try:
         url = f'https://lolalytics.com/lol/{top_1_used_champ}/build/'.lower()
-        # html = await get_html(url, DEFAULT_HEADERS)
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
