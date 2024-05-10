@@ -171,13 +171,34 @@ async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
         html = HTMLParser(response.text)
-        ladder_rank = html.css_first('div.info > div.team-and-rank > div.rank > a').text()
-        
+        ladder_rank = html.css_first('div.info > div.team-and-rank > div.rank > a').text().strip()
         return {
             'ladder_rank': ladder_rank
         }
     except:
         return {'error': 'there was some trouble fetching the ladder rank'}
+
+async def mastery(name: str, session: AsyncSession) -> dict[str, str]:
+    try:
+        url = f'https://championmastery.gg/player?riotId={name.replace(" ", "+").replace("#", "%23")}&region=EUW&lang=en_US'
+        print(f'Establishing connection to {url}...')
+        response = await session.get(url, headers=DEFAULT_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
+        html = HTMLParser(response.text)
+        top_3_mastery = []
+        for i in range(3):
+            mastery_name = html.css_first(f'#tbody > tr:nth-child({i+1}) > td:nth-child(1) > a').text()
+            mastery_amount = html.css_first(f'#tbody > tr:nth-child({i+1}) > td:nth-child(3)').text()
+            top_3_mastery.append({
+                'name': mastery_name,
+                'amount': mastery_amount
+            })
+        return {
+            'top_3_mastery': top_3_mastery
+        }
+    except:
+        return {'error': [{'error': 'there was some trouble fetching the mastery'}]}
+        
 
 
 async def main(name: str) -> dict[str, dict]:
@@ -191,20 +212,23 @@ async def main(name: str) -> dict[str, dict]:
             ingsingfull_info_task = asyncio.create_task(ingsingfull_info(top_1_used_champ, session))
             mmr_task = asyncio.create_task(mmr(name, session))
             ladder_rank_task = asyncio.create_task(ladder_rank(name, session))
+            mastery_task = asyncio.create_task(mastery(name, session))
 
-            results = await asyncio.gather(wiki_info_task, ingsingfull_info_task, mmr_task, ladder_rank_task)
+            results = await asyncio.gather(wiki_info_task, ingsingfull_info_task, mmr_task, ladder_rank_task, mastery_task)
 
             wiki_info_result = results[0]
             ingsingfull_info_result = results[1]
             mmr_result = results[2]
             ladder_rank_result = results[3]
+            mastery_result = results[4]
     
             return {
                 'champ_info': champ_info_result,
                 'wiki_info': wiki_info_result,
                 'ingsingfull_info': ingsingfull_info_result,
                 'mmr': mmr_result,
-                'ladder_rank': ladder_rank_result
+                'ladder_rank': ladder_rank_result,
+                'mastery': mastery_result
             }
             
     except Exception as e:

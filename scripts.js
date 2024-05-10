@@ -8,6 +8,7 @@ const rankAndMmr = document.querySelector('.rank-and-mmr');
 const top5BestWr = document.querySelector('.top-5-best-wr-with-champ');
 const championLore = document.querySelector('.champion-lore');
 
+
 // Define a function to handle the form submission
 async function handleFormSubmission(event) {
     event.preventDefault();
@@ -49,6 +50,10 @@ async function handleFormSubmission(event) {
                     <li><strong>Top 1 Used Champion:</strong> ${jsonData.champ_info.top_1_used_champ}</li>
                     <li><strong>Top 2 Used Champion:</strong> ${jsonData.champ_info.top_2_used_champ}</li>
                 </ul>
+                <ul>
+                <h4>Top 3 Mastery</h4>
+                ${jsonData.mastery.top_3_mastery.map(mastery => `<li><strong>${mastery.name}:</strong> ${mastery.amount} points</li>`).join('')}
+            </ul>
             `;
             championInfo.innerHTML = championInfoHTML;
 
