@@ -22,6 +22,29 @@
                 <li><strong>Main Role:</strong> {{ main_role }}</li>
             </ul>
         </section>
+        <section class="performance-stats">
+          <h2>Performance Stats</h2>
+          <ul>
+              <li><strong>Win Rate:</strong> {{ win_rate }}</li>
+              <li><strong>Player Score:</strong> {{ player_score }}</li>
+              <li><strong>Kill Participation:</strong> {{ kill_participation }}%</li>
+              <li><strong>Objective Participation:</strong> {{ objective_participation }}%</li>
+              <li><strong>XP Diff vs Enemy:</strong> {{ xp_diff_vs_enemy }}%</li>
+          </ul>
+      </section>
+        <section class="rank-and-mmr">
+          <h2>Rank and MMR</h2>
+          <ul>
+              <li><strong>Rank Image:</strong> <img class="rank-image" src="{{ rank_image }}" alt="Rank Image"></li>
+              <li><strong>MMR:</strong> {{ mmr }}</li>
+          </ul>
+      </section>
+        <form id="playerSearchForm">
+          <label for="playerName">Enter Player Name:</label>
+          <input type="text" id="playerName" name="playerName" required>
+          <button type="submit">Get Statistics</button>
+      </form>
+      
         <section class="champion-info">
             <h2>Champion Information</h2>
             <div class="champion-image">
@@ -30,23 +53,6 @@
             <ul>
                 <li><strong>Top 1 Used Champion:</strong> {{ top_1_used_champ }}</li>
                 <li><strong>Top 2 Used Champion:</strong> {{ top_2_used_champ }}</li>
-            </ul>
-        </section>
-        <section class="performance-stats">
-            <h2>Performance Stats</h2>
-            <ul>
-                <li><strong>Win Rate:</strong> {{ win_rate }}</li>
-                <li><strong>Player Score:</strong> {{ player_score }}</li>
-                <li><strong>Kill Participation:</strong> {{ kill_participation }}%</li>
-                <li><strong>Objective Participation:</strong> {{ objective_participation }}%</li>
-                <li><strong>XP Diff vs Enemy:</strong> {{ xp_diff_vs_enemy }}%</li>
-            </ul>
-        </section>
-        <section class="rank-and-mmr">
-            <h2>Rank and MMR</h2>
-            <ul>
-                <li><strong>Rank Image:</strong> <img class="rank-image" src="{{ rank_image }}" alt="Rank Image"></li>
-                <li><strong>MMR:</strong> {{ mmr }}</li>
             </ul>
         </section>
         <section class="top-5-best-wr-with-champ">
@@ -59,7 +65,7 @@
                         <th>Region</th>
                     </tr>
                 </thead>
-                <tbody>
+                {% comment %} <tbody>
                     {% for player in ingsingfull_info.top_5_best_wr_with_champ %}
                     <tr>
                         <td>{{ player.name }}</td>
@@ -67,7 +73,7 @@
                         <td>{{ player.region }}</td>
                     </tr>
                     {% endfor %}
-                </tbody>
+                </tbody> {% endcomment %}
             </table>
         </section>
         <section class="champion-lore">

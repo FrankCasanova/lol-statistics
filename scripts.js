@@ -1,6 +1,7 @@
 
 
 // Declare variables
+const playerSearchForm = document.querySelector('#playerSearchForm');
 const playerName = document.querySelector('.player-name');
 const playerInfo = document.querySelector('.player-info');
 const championInfo = document.querySelector('.champion-info');
@@ -9,9 +10,14 @@ const rankAndMmr = document.querySelector('.rank-and-mmr');
 const top5BestWr = document.querySelector('.top-5-best-wr-with-champ');
 const championLore = document.querySelector('.champion-lore');
 
+playerSearchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const playerNameInput = document.querySelector('#playerName').value;
+    const encodedPlayerName = encodeURIComponent(playerNameInput);
+    const playerUrl = `http://127.0.0.1:8000/api/v1/playerprofile-data${encodedPlayerName}`;
 
-// Fetch the JSON file
-fetch('result.json')
+    // Fetch the JSON file
+    fetch(playerUrl)
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -23,6 +29,7 @@ fetch('result.json')
         // Populate the HTML sections with JSON data
         playerName.innerHTML = 'Player Profile - ' + jsonData.champ_info.name;
         playerInfo.innerHTML = `
+            <h2>Player Information</h2>
             <ul>
                 <li><strong>Rank:</strong> ${jsonData.champ_info.rank}</li>
                 <li><strong>LP:</strong> ${jsonData.champ_info.lp}</li>
@@ -34,6 +41,7 @@ fetch('result.json')
         `;
 
         championInfo.innerHTML = `
+            <h2>Champion Information</h2>
             <div class="champion-image">
                 <img src="${jsonData.champ_info.top_1_used_champ_image}" alt="Top 1 Used Champion Icon">
                 <img src="${jsonData.champ_info.top_2_used_champ_image}" alt="Top 2 Used Champion Icon">
@@ -45,6 +53,7 @@ fetch('result.json')
         `;
 
         performanceStats.innerHTML = `
+            <h2>Performance Stats</h2>
             <ul>
                 <li><strong>Win Rate:</strong> ${jsonData.champ_info.win_rate}</li>
                 <li><strong>Player Score:</strong> ${jsonData.champ_info.player_score}</li>
@@ -55,6 +64,7 @@ fetch('result.json')
         `;
 
         rankAndMmr.innerHTML = `
+            <h2>Rank and MMR</h2>
             <ul>
                 <li><strong>Rank Image:</strong> <img class="rank-image" src="${jsonData.champ_info.rank_image}" alt="Rank Image"></li>
                 <li><strong>MMR:</strong> ${jsonData.mmr.mmr} ${jsonData.mmr.rank}</li>
@@ -62,6 +72,7 @@ fetch('result.json')
         `;
 
         top5BestWr.innerHTML = `
+            <h2>Top 5 Best Win Rates with Champion</h2>
             <table>
                 <thead>
                     <tr>
@@ -85,6 +96,7 @@ fetch('result.json')
         `;
 
         championLore.innerHTML = `
+            <h2>Champion Lore</h2>
             <p>${jsonData.wiki_info.lore}</p>
             <p>${jsonData.ingsingfull_info.brief_summary}</p>
             <p>${jsonData.ingsingfull_info.data_about_champ}</p>
@@ -94,7 +106,7 @@ fetch('result.json')
         console.error('There was a problem fetching the JSON file:', error);
     });
 
-// Add event listener for night mode toggle
-document.querySelector('.night-mode-toggle').addEventListener('click', () => {
-    document.body.classList.toggle('night-mode');
 });
+    
+
+
