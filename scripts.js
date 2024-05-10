@@ -1,6 +1,7 @@
 
 
 // Declare variables
+const playerName = document.querySelector('.player-name');
 const playerInfo = document.querySelector('.player-info');
 const championInfo = document.querySelector('.champion-info');
 const performanceStats = document.querySelector('.performance-stats');
@@ -20,6 +21,7 @@ fetch('result.json')
     .then(jsonData => {
         console.log('JSON data:', jsonData);
         // Populate the HTML sections with JSON data
+        playerName.innerHTML = 'Player Profile - ' + jsonData.champ_info.name;
         playerInfo.innerHTML = `
             <ul>
                 <li><strong>Rank:</strong> ${jsonData.champ_info.rank}</li>

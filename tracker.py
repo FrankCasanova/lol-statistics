@@ -139,7 +139,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         print(f'Connection established, status: {response.status_code}')
         html = HTMLParser(response.text)
         
-        brief_summary = html.css_first('div.flex-1 > p').text()
+        brief_summary = html.css_first('div.flex-1 > p').text() 
         data_about_champ = html.css_first('div:nth-child(7) > div > h2').text()
         data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > h1').text()
         data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(1)').text()
@@ -195,7 +195,7 @@ if __name__ == "__main__":
     with open('result.json', 'w') as file:
         file.write('')
     
-    result = asyncio.run(main('CHADUDYR#UDYR'))
+    result = asyncio.run(main('niñarata666#euw'))
     
     with open('result.json', 'a') as file:
         json.dump(result, file)

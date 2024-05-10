@@ -1,1 +1,57 @@
-{"champ_info": {"name": "CHADUDYR", "win_rate": "51.1%", "rank": "Platinum III", "lp": "59LP", "top_1_used_champ": "Udyr", "top_2_used_champ": "Rammus", "main_role": "Jungle", "player_score": "629 /1000", "kill_participation": "45.8%", "objetive_participation": "78.7%", "xp_diff_vs_enemy": "-2.7%", "profile_image": "https://imgsvc.trackercdn.com/url/size(128),fit(cover)/https%3A%2F%2Ftrackercdn.com%2Fddragon%2Fcdn%2F14.9.1%2Fimg%2Fprofileicon%2F6218.png/image.jpg", "rank_image": "https://trackercdn.com/cdn/tracker.gg/lol/ranks/2022/platinum.png", "top_1_used_champ_image": "https://trackercdn.com/cdn/tracker.gg/lol/champions/77/icon.png", "top_2_used_champ_image": "https://trackercdn.com/cdn/tracker.gg/lol/champions/33/icon.png"}, "wiki_info": {"lore": "The most powerful spirit walker alive, Udyr communes with all the spirits of the Freljord, whether by empathically understanding their needs, or by channeling and transforming their ethereal energy into his own primal fighting style. He seeks balance within, so that his mind does not get lost amidst others, but he also seeks balance without\u2014for the Freljord's mystical landscape can only thrive with the growth that comes from conflict and struggle, and Udyr knows that sacrifices must be made to keep peaceful stagnance at bay."}, "ingsingfull_info": {"brief_summary": "Udyr jungle has a 52.14% win rate in Emerald+ on Patch 14.9 coming in at rank 35 of 68 and graded B Tier on the LoL Tierlist. Udyr jungle is a strong counter to Warwick, Hecarim & Shyvana while Udyr is countered most by Ekko, Kindred & Rek'Sai. The best Udyr players have a 55.72% win rate with an average rank of Master on the Udyr Leaderboard. Below is a detailed breakdown of the Udyr build, runes & counters.", "data_about_champ": "Best on UdyrLast 7 Day Performance 55.72% Win Rate Analyzing 3,306 games played by the top 489 Udyr players worldwide over the last 7 days. The average rank of these top Udyr players was Master . Taking into account win rate and summoner rank Udyr is ranked 105  amongst all champions in the hands of an expert. Maximum 50 summoners are used per region with a minimum of Diamond IV and 50 games played on Udyr to be eligible.", "top_5_best_wr_with_champ": [{"name": "Allorim#NA1", "wr": "70%", "region": "na"}, {"name": "VIICHAN#DRX1", "wr": "61%", "region": "kr"}, {"name": "annanaccc#NA1", "wr": "66%", "region": "na"}, {"name": "Malice#HAZE", "wr": "65%", "region": "euw"}, {"name": "BURNING STAR IV#wnwn", "wr": "68%", "region": "na"}]}, "mmr": {"mmr": 2168.4, "rank": "platinum-iii"}}
+{
+    "champ_info": {
+        "name": "ni\u00f1arata666",
+        "win_rate": "48.0%",
+        "rank": "Gold IV",
+        "lp": "66LP",
+        "top_1_used_champ": "Morgana",
+        "top_2_used_champ": "Miss Fortune",
+        "main_role": "Support",
+        "player_score": "562 /1000",
+        "kill_participation": "49.7%",
+        "objetive_participation": "43.1%",
+        "xp_diff_vs_enemy": "1.4%",
+        "profile_image": "https://imgsvc.trackercdn.com/url/size(128),fit(cover)/https%3A%2F%2Ftrackercdn.com%2Fddragon%2Fcdn%2F14.9.1%2Fimg%2Fprofileicon%2F5975.png/image.jpg",
+        "rank_image": "https://trackercdn.com/cdn/tracker.gg/lol/ranks/2022/gold.png",
+        "top_1_used_champ_image": "https://trackercdn.com/cdn/tracker.gg/lol/champions/25/icon.png",
+        "top_2_used_champ_image": "https://trackercdn.com/cdn/tracker.gg/lol/champions/21/icon.png"
+    },
+    "wiki_info": {
+        "lore": "Conflicted between her celestial and mortal natures, Morgana bound her wings to embrace humanity, and inflicts her pain and bitterness upon the dishonest and the corrupt. She rejects laws and traditions she believes are unjust, and fights for truth from the shadows of Demacia\u2014even as others seek to repress it\u2014by casting shields and chains of dark fire. More than anything else, Morgana truly believes that even the banished and outcast may one day rise again."
+    },
+    "ingsingfull_info": {
+        "brief_summary": "Morgana support has a 51.22% win rate in Emerald+ on Patch 14.9 coming in at rank 48 of 75 and graded B- Tier on the LoL Tierlist. Morgana support is a strong counter to Alistar, Swain & Hwei while Morgana is countered most by Sona, Milio & Vel'Koz. The best Morgana players have a 55.57% win rate with an average rank of Diamond II on the Morgana Leaderboard. Below is a detailed breakdown of the Morgana build, runes & counters.",
+        "data_about_champ": "Best on MorganaLast 7 Day Performance 55.57% Win Rate Analyzing 1,733 games played by the top 345 Morgana players worldwide over the last 7 days. The average rank of these top Morgana players was Diamond II . Taking into account win rate and summoner rank Morgana is ranked 159  amongst all champions in the hands of an expert. Maximum 50 summoners are used per region with a minimum of Diamond IV and 50 games played on Morgana to be eligible.",
+        "top_5_best_wr_with_champ": [
+            {
+                "name": "Namirde#TR1",
+                "wr": "71%",
+                "region": "tr"
+            },
+            {
+                "name": "Maaz Patel#EUW",
+                "wr": "61%",
+                "region": "euw"
+            },
+            {
+                "name": "Nunca1#BR1",
+                "wr": "56%",
+                "region": "br"
+            },
+            {
+                "name": "ANDERSON LYA#LYA1",
+                "wr": "68%",
+                "region": "lan"
+            },
+            {
+                "name": "FXN Trailblazer#EUW",
+                "wr": "53%",
+                "region": "euw"
+            }
+        ]
+    },
+    "mmr": {
+        "mmr": 1517.2,
+        "rank": "gold-iv"
+    }
+}
