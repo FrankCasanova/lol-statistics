@@ -164,6 +164,21 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
     except:
         return {'error': 'there was some trouble fetching the brief summary'}
 
+async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
+    try:
+        url = f'https://www.op.gg/summoners/euw/{name.replace(" ", "%20").replace("#", "-")}'
+        print(f'Establishing connection to {url}...')
+        response = await session.get(url, headers=DEFAULT_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
+        html = HTMLParser(response.text)
+        ladder_rank = html.css_first('div.info > div.team-and-rank > div.rank > a').text()
+        
+        return {
+            'ladder_rank': ladder_rank
+        }
+    except:
+        return {'error': 'there was some trouble fetching the ladder rank'}
+
 
 async def main(name: str) -> dict[str, dict]:
     try:
@@ -175,22 +190,27 @@ async def main(name: str) -> dict[str, dict]:
             wiki_info_task = asyncio.create_task(wiki_info(top_1_used_champ, session))
             ingsingfull_info_task = asyncio.create_task(ingsingfull_info(top_1_used_champ, session))
             mmr_task = asyncio.create_task(mmr(name, session))
+            ladder_rank_task = asyncio.create_task(ladder_rank(name, session))
 
-            results = await asyncio.gather(wiki_info_task, ingsingfull_info_task, mmr_task)
+            results = await asyncio.gather(wiki_info_task, ingsingfull_info_task, mmr_task, ladder_rank_task)
 
             wiki_info_result = results[0]
             ingsingfull_info_result = results[1]
             mmr_result = results[2]
-
+            ladder_rank_result = results[3]
+    
             return {
                 'champ_info': champ_info_result,
                 'wiki_info': wiki_info_result,
                 'ingsingfull_info': ingsingfull_info_result,
                 'mmr': mmr_result,
+                'ladder_rank': ladder_rank_result
             }
+            
     except Exception as e:
         print(f'An error occurred in the main function: {e}')
         return {}
+
 # if __name__ == "__main__":
 #     with open('result.json', 'w') as file:
 #         file.write('')
