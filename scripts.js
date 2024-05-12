@@ -9,9 +9,11 @@ const top5BestWr = document.querySelector('.top-5-best-wr-with-champ');
 const championLore = document.querySelector('.champion-lore');
 
 
+
 // Define a function to handle the form submission
 async function handleFormSubmission(event) {
     event.preventDefault();
+    
     const playerNameInput = document.querySelector('#playerName').value;
     const encodedPlayerName = encodeURIComponent(playerNameInput);
     const playerUrl = `http://127.0.0.1:8000/api/v1/playerprofile-data${encodedPlayerName}`;
