@@ -199,37 +199,41 @@ async def mastery(name: str, session: AsyncSession) -> dict[str, str]:
     except:
         return {'error': [{'error': 'there was some trouble fetching the mastery'}]}
         
-
+        
 
 async def main(name: str) -> dict[str, dict]:
     try:
-        async with AsyncSession(impersonate='edge101') as session:
-            champ_info_task = asyncio.create_task(champ_info(name, session))
-            champ_info_result = await champ_info_task
-            top_1_used_champ = champ_info_result.get('top_1_used_champ', '')
+        session = AsyncSession(impersonate='edge101')
+        champ_info_result = await champ_info(name, session)
+        top_1_used_champ = champ_info_result.get('top_1_used_champ', '')
 
-            wiki_info_task = asyncio.create_task(wiki_info(top_1_used_champ, session))
-            ingsingfull_info_task = asyncio.create_task(ingsingfull_info(top_1_used_champ, session))
-            mmr_task = asyncio.create_task(mmr(name, session))
-            ladder_rank_task = asyncio.create_task(ladder_rank(name, session))
-            mastery_task = asyncio.create_task(mastery(name, session))
+        wiki_info_task = asyncio.create_task(wiki_info(top_1_used_champ, session))
+        ingsingfull_info_task = asyncio.create_task(ingsingfull_info(top_1_used_champ, session))
+        mmr_task = asyncio.create_task(mmr(name, session))
+        ladder_rank_task = asyncio.create_task(ladder_rank(name, session))
+        mastery_task = asyncio.create_task(mastery(name, session))
 
-            results = await asyncio.gather(wiki_info_task, ingsingfull_info_task, mmr_task, ladder_rank_task, mastery_task)
 
-            wiki_info_result = results[0]
-            ingsingfull_info_result = results[1]
-            mmr_result = results[2]
-            ladder_rank_result = results[3]
-            mastery_result = results[4]
+        results = await asyncio.gather(wiki_info_task, ingsingfull_info_task, mmr_task, ladder_rank_task, mastery_task)
+
+        wiki_info_result = results[0]
+        ingsingfull_info_result = results[1]
+        mmr_result = results[2]
+        ladder_rank_result = results[3]
+        mastery_result = results[4]
     
-            return {
-                'champ_info': champ_info_result,
-                'wiki_info': wiki_info_result,
-                'ingsingfull_info': ingsingfull_info_result,
-                'mmr': mmr_result,
-                'ladder_rank': ladder_rank_result,
-                'mastery': mastery_result
-            }
+        
+        
+
+        return {
+            'champ_info': champ_info_result,
+            'wiki_info': wiki_info_result,
+            'ingsingfull_info': ingsingfull_info_result,
+            'mmr': mmr_result,
+            'ladder_rank': ladder_rank_result,
+            'mastery': mastery_result,
+    
+        }
             
     except Exception as e:
         print(f'An error occurred in the main function: {e}')

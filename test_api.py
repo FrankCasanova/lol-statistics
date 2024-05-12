@@ -1,52 +1,33 @@
-import asyncio
+from selectolax.parser import HTMLParser
 from curl_cffi.requests import AsyncSession
+import asyncio
 from asyncio import WindowsSelectorEventLoopPolicy
-
+from setting import DEFAULT_HEADERS
+import pprint
 
 asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+session = AsyncSession()
 
-async def main():
-    async with AsyncSession(impersonate='edge101') as client:
-        url = "https://api.tracker.gg/api/v2/lol/standard/profile/riot/CHADUDYR%23UDYR?region=EUW"
-
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-            "Dnt": "1",
-            "Upgrade-Insecure-Requests": "1",
-            "Connection": "keep-alive",
-            "Cache-Control": "max-age=0",
+async def tags(name: str, session: AsyncSession) -> dict[str, str]:
+    try:
+        url = f'https://www.leagueofgraphs.com/summoner/euw/{name.replace(" ", "%20").replace("#", "-")}'
+        print(f'Establishing connection to {url}...')
+        response = await session.get(url, headers=DEFAULT_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
+        html = HTMLParser(response.text)
+        pprint.pprint(html.text())
+        tags = html.css('.tags-box')
+        texts = [div.text(deep=True, separator='', strip=True) for div in tags]
+        return {
+            'tags': texts
         }
-
-        payload = ""
-
-        response = await client.get(url, headers=headers, data=payload,)
-
-        print(response.text)
-
-
-asyncio.run(main())
-
-# print(response.headers)
-# print(response.status_code)
-# print(response.cookies)
+    except:
+        return {'error': 'there was some trouble fetching the tags'}
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+asyncio.run(tags('CHADUDYR#UDYR', session))
 
 
 

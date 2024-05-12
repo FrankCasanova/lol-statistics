@@ -28,15 +28,17 @@ async function handleFormSubmission(event) {
 
             const playerInfoHTML = `
                 <h2>Player Information</h2>
+                <div class="player-image">
+                    <img src="${jsonData.champ_info.profile_image}" alt="Player Profile Image">
+                </div>
                 <ul>
                     <li><strong>Rank:</strong> ${jsonData.champ_info.rank}</li>
+                    <li><strong>MMR:</strong> ${jsonData.mmr.mmr} ${jsonData.mmr.rank}</li>
                     <li><strong>LP:</strong> ${jsonData.champ_info.lp}</li>
                     <li><strong>Main Role:</strong> ${jsonData.champ_info.main_role}</li>
                     <li><strong>Ladder Rank:</strong> ${jsonData.ladder_rank.ladder_rank}</li>
                 </ul>
-                <div class="player-image">
-                    <img src="${jsonData.champ_info.profile_image}" alt="Player Profile Image">
-                </div>
+                
             `;
             playerInfo.innerHTML = playerInfoHTML;
 
@@ -69,14 +71,14 @@ async function handleFormSubmission(event) {
             `;
             performanceStats.innerHTML = performanceStatsHTML;
 
-            const rankAndMmrHTML = `
-                <h2>Rank and MMR</h2>
-                <ul>
-                    <li><strong>Rank Image:</strong> <img class="rank-image" src="${jsonData.champ_info.rank_image}" alt="Rank Image"></li>
-                    <li><strong>MMR:</strong> ${jsonData.mmr.mmr} ${jsonData.mmr.rank}</li>
-                </ul>
-            `;
-            rankAndMmr.innerHTML = rankAndMmrHTML;
+            // const rankAndMmrHTML = `
+            //     <h2>Rank and MMR</h2>
+            //     <ul>
+            //         <img class="rank-image" src="${jsonData.champ_info.rank_image}" alt="Rank Image"></li>
+            //         <li><strong>MMR:</strong> ${jsonData.mmr.mmr} ${jsonData.mmr.rank}</li>
+            //     </ul>
+            // `;
+            // rankAndMmr.innerHTML = rankAndMmrHTML;
 
             const top5BestWrHTML = `
                 <h2>Top 5 Best Win Rates with Champion</h2>

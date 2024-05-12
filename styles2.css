@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Form Styles in Header */
+header form {
+    display: flex;
+    gap: 10px;
+}
+
+header form input[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+}
+
+header form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+header form button:hover {
+    background-color: #555;
+}
+
+/* Main Styles */
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Section Styles */
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+}
+
+/* List Styles */
+ul {
+    list-style-type: none;
+}
+
+/* Image Styles */
+.player-image img, .champion-image img, .rank-image {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #fff; /* Added border */
+    box-shadow: 0px 0px 10px 3px rgba(255, 255, 255, 0.1); /* Added shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added transition for shadow */
+}
+
+.player-image img:hover, .champion-image img:hover, .rank-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px 6px rgba(255, 255, 255, 0.3); /* Increased shadow on hover */
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input[type="text"] {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+form button:hover {
+    background-color: #555;
+}
+
+/* Footer Styles */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Media Queries */
+@media screen and (min-width: 768px) {
+    main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    main {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+

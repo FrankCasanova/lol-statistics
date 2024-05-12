@@ -4,10 +4,17 @@
     <title>Player Profile</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css"> <!-- Add your CSS file here -->
+    <link rel="stylesheet" href="styles2.css"> <!-- Add your CSS file here -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
+        <form id="playerSearchForm">
+            <label for="playerName">Enter Player Name:</label>
+            <input type="text" id="playerName" name="playerName" required>
+            <button type="submit">Get Statistics</button>
+        </form>
         <h1 class="player-name">Player Profile - Twitch Oskr1938</h1>
     </header>
     <main>
@@ -18,6 +25,7 @@
             </div>
             <ul>
                 <li><strong>Rank:</strong> {{ rank }}</li>
+                <li><strong>MMR:</strong> {{ mmr }}</li>
                 <li><strong>LP:</strong> {{ lp }}</li>
                 <li><strong>Main Role:</strong> {{ main_role }}</li>
                 <li><strong>Ladder Rank:</strong>{{ ladder_rank }}</li>
@@ -33,19 +41,13 @@
               <li><strong>XP Diff vs Enemy:</strong> {{ xp_diff_vs_enemy }}%</li>
           </ul>
       </section>
-        <section class="rank-and-mmr">
+        <!-- <section class="rank-and-mmr">
           <h2>Rank and MMR</h2>
           <ul>
-              <li><strong>Rank Image:</strong> <img class="rank-image" src="{{ rank_image }}" alt="Rank Image"></li>
+              <img class="rank-image" src="{{ rank_image }}" alt="Rank Image"></li>
               <li><strong>MMR:</strong> {{ mmr }}</li>
           </ul>
-      </section>
-        <form id="playerSearchForm">
-          <label for="playerName">Enter Player Name:</label>
-          <input type="text" id="playerName" name="playerName" required>
-          <button type="submit">Get Statistics</button>
-      </form>
-      
+      </section> -->
         <section class="champion-info">
             <h2>Champion Information</h2>
             <div class="champion-image">
