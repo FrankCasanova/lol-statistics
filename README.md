@@ -25,6 +25,7 @@ To set up the project locally, you can follow these steps:
 4. Activate the virtual enviroment. On Windows, run:
    ```bash
    venv\Scripts\activate
+   ```
    on macOS and Linux, run:
    ```bash
    source venv/bin/activate
