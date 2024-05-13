@@ -1,5 +1,7 @@
 we need a good frontend i must be smooth
+we need to add a loading image
 we need the form.html where the user puts the summoner name, it also must to look good
+if error 404 we must to inform the user
 
 we can retreve some usefull information from leagueofgraph
 

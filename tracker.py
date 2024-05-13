@@ -37,7 +37,8 @@ async def mmr(name: str, session: AsyncSession) -> dict:
         }
     except:
         return {
-            'error': 'there was some trouble fetching the mmr'
+            'mmr': 0,
+            'rank': 'n/a'
         }
 
 
@@ -118,7 +119,9 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
             'lore': lore
         }
     except:
-        return {'error': 'there was some trouble fetching the wiki information'}
+        return {
+            'lore': 'Lore Not Found'	
+        }
 
     
 
@@ -162,7 +165,9 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
             'top_5_best_wr_with_champ': top_5_best_wr_with_champ 
         }
     except:
-        return {'error': 'there was some trouble fetching the brief summary'}
+        return {'brief_summary': 'n/a',
+                'data_about_champ': 'n/a',
+                'top_5_best_wr_with_champ': [{'name': 'n/a', 'wr': 'n/a', 'region': 'n/a'}]}
 
 async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
     try:
@@ -176,7 +181,7 @@ async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
             'ladder_rank': ladder_rank
         }
     except:
-        return {'error': 'there was some trouble fetching the ladder rank'}
+        return {'ladder_rank': 'n/a'}
 
 async def mastery(name: str, session: AsyncSession) -> dict[str, str]:
     try:
@@ -197,7 +202,10 @@ async def mastery(name: str, session: AsyncSession) -> dict[str, str]:
             'top_3_mastery': top_3_mastery
         }
     except:
-        return {'error': [{'error': 'there was some trouble fetching the mastery'}]}
+        return {'top_3_mastery': [{
+            'name': 'n/a',
+            'amount': 'n/a'
+        }]}
         
         
 

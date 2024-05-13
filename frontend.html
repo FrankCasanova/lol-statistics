@@ -9,6 +9,7 @@
 
 </head>
 <body>
+    <audio src="https://lolsound.com/sounds/AurelionSol/en_US/base/AurelionSol_SkillR_cast_213379777.ogg" autoplay ></audio>
     <header>
         <form id="playerSearchForm">
             <label for="playerName">Enter Player Name:</label>
@@ -78,15 +79,14 @@
                         <th>Region</th>
                     </tr>
                 </thead>
-                {% comment %} <tbody>
-                    {% for player in ingsingfull_info.top_5_best_wr_with_champ %}
+                 <tbody>
                     <tr>
                         <td>{{ player.name }}</td>
                         <td>{{ player.wr }}%</td>
                         <td>{{ player.region }}</td>
                     </tr>
-                    {% endfor %}
-                </tbody> {% endcomment %}
+                    
+                </tbody> 
             </table>
         </section>
         <section class="champion-lore">

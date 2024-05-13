@@ -8,6 +8,19 @@ const rankAndMmr = document.querySelector('.rank-and-mmr');
 const top5BestWr = document.querySelector('.top-5-best-wr-with-champ');
 const championLore = document.querySelector('.champion-lore');
 
+// Select the audio element
+var audio = document.querySelector('audio');
+
+// Select the form
+var form = document.querySelector('#playerSearchForm');
+
+// Add an event listener to the form
+form.addEventListener('submit', function() {
+    // Play the audio
+    audio.play();
+});
+
+
 
 
 // Define a function to handle the form submission
@@ -114,9 +127,9 @@ async function handleFormSubmission(event) {
                 <p>${jsonData.ingsingfull_info.data_about_champ}</p>
             `;
             championLore.innerHTML = championLoreHTML;
+            
         }
 
 // Add the event listener to the form
 playerSearchForm.addEventListener('submit', handleFormSubmission);
-
 

@@ -5,6 +5,16 @@ body {
     color: #c4b998;
 }
 
+h1, h2, h3, h4, h5, h6, p, table, ul {
+    animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+
 /* Header Styles */
 header {
     display: flex;
@@ -49,6 +59,7 @@ main {
     grid-template-columns: 1fr;
     gap: 20px;
     padding: 20px;
+    
 }
 
 /* Section Styles */
@@ -62,11 +73,11 @@ section {
     transition: all 0.5s ease;
 }
 
+
 /* List Styles */
 ul {
     list-style-type: none;
 }
-
 /* Image Styles */
 .player-image img, .champion-image img, .rank-image {
     width: 100%;
@@ -75,13 +86,20 @@ ul {
     border-radius: 50%;
     border: 2px solid #fff; /* Added border */
     box-shadow: 0px 0px 10px 3px rgba(255, 255, 255, 0.1); /* Added shadow */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added transition for shadow */
+    animation: fadeIn 1s ease-in-out forwards; /* Added animation */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 .player-image img:hover, .champion-image img:hover, .rank-image:hover {
     transform: scale(1.1);
     box-shadow: 0px 0px 20px 6px rgba(255, 255, 255, 0.3); /* Increased shadow on hover */
 }
+
+
 
 /* Form Styles */
 form {
