@@ -63,6 +63,7 @@ main {
 }
 
 /* Section Styles */
+/* Section Styles */
 section {
     display: flex;
     flex-direction: column;
@@ -70,8 +71,30 @@ section {
     background-color: #121212;
     padding: 20px;
     border-radius: 10px;
-    transition: all 0.5s ease;
+    position: relative; /* Add position relative to the section */
+    overflow: hidden; /* Ensure the pseudo-element stays within section */
 }
+
+/* Light reflection effect */
+section::before {
+    content: '';
+    position: absolute;
+    top: -90%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 80%);
+    transition: all 0.5s ease;
+    pointer-events: none; /* Ensure the pseudo-element doesn't interfere with pointer events */
+    transform: translate(-50%, -50%) rotate(45deg); /* Initial position */
+}
+
+/* Hover effect */
+section:hover::before {
+    transform: translate(150%, 150%) rotate(45deg); /* Move pseudo-element diagonally */
+}
+
+
 
 
 /* List Styles */
@@ -94,10 +117,10 @@ ul {
     100% { opacity: 1; }
 }
 
-.player-image img:hover, .champion-image img:hover, .rank-image:hover {
+/* .player-image img:hover, .champion-image img:hover, .rank-image:hover {
     transform: scale(1.1);
     box-shadow: 0px 0px 20px 6px rgba(255, 255, 255, 0.3); /* Increased shadow on hover */
-}
+/* } */ 
 
 
 
@@ -115,6 +138,7 @@ form input[type="text"] {
     border-radius: 5px;
 }
 
+/* Button Styles */
 form button {
     padding: 10px 20px;
     border: none;
@@ -123,7 +147,29 @@ form button {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    position: relative; /* Add position relative to the button */
+    overflow: hidden; /* Ensure the pseudo-element stays within button */
 }
+
+/* Light reflection effect */
+form button::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -70%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 80%);
+    transition: all 0.5s ease;
+    pointer-events: none; /* Ensure the pseudo-element doesn't interfere with pointer events */
+    transform: translate(-50%, -50%) rotate(45deg); /* Initial position */
+}
+
+/* Hover effect */
+form button:hover::before {
+    transform: translate(150%, 150%) rotate(45deg); /* Move pseudo-element diagonally */
+}
+
 
 form button:hover {
     background-color: #555;
