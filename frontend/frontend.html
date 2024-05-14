@@ -16,7 +16,7 @@
             <input type="text" id="playerName" name="playerName" required>
             <button type="submit">Get Statistics</button>
         </form>
-        <h1 class="player-name">Player Profile - Twitch Oskr1938</h1>
+        <h1 class="player-name">Player Profile - NOOB</h1>
     </header>
     <main>
         <section class="player-info">
@@ -26,25 +26,25 @@
             
             <h2>Player Information</h2>
             <div class="player-image">
-                <img src="{{ profile_image }}" alt="Player Profile Image">
+                <img src="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg" alt="Player Profile Image">
             </div>
             <ul>
-                <li><strong>Rank:</strong> {{ rank }}</li>
-                <li><strong>MMR:</strong> {{ mmr }}</li>
-                <li><strong>LP:</strong> {{ lp }}</li>
-                <li><strong>Main Role:</strong> {{ main_role }}</li>
-                <li><strong>Ladder Rank:</strong>{{ ladder_rank }}</li>
+                <li><strong>Rank:</strong> Iron IV</li>
+                <li><strong>MMR:</strong> 0 </li>
+                <li><strong>LP:</strong> 0 </li>
+                <li><strong>Main Role:</strong> Top</li>
+                <li><strong>Ladder Rank:</strong> LAST</li>
                 
             </ul>
         </section>
         <section class="performance-stats">
           <h2>Performance Stats</h2>
           <ul>
-              <li><strong>Win Rate:</strong> {{ win_rate }}</li>
-              <li><strong>Player Score:</strong> {{ player_score }}</li>
-              <li><strong>Kill Participation:</strong> {{ kill_participation }}%</li>
-              <li><strong>Objective Participation:</strong> {{ objective_participation }}%</li>
-              <li><strong>XP Diff vs Enemy:</strong> {{ xp_diff_vs_enemy }}%</li>
+              <li><strong>Win Rate:</strong> 0% </li>
+              <li><strong>Player Score:</strong> 0</li>
+              <li><strong>Kill Participation:</strong> 0%</li>
+              <li><strong>Objective Participation:</strong> 0%</li>
+              <li><strong>XP Diff vs Enemy:</strong> 0%</li>
           </ul>
       </section>
         <!-- <section class="rank-and-mmr">
@@ -57,17 +57,17 @@
         <section class="champion-info">
             <h2>Champion Information</h2>
             <div class="champion-image">
-                <img src="{{ top_1_used_champ_image }}" alt="Top 1 Used Champion Icon">
+                <img src="https://vignette.wikia.nocookie.net/leagueoflegends/images/d/d5/Yuumi_Render.png/revision/latest?cb=20190502165317" alt="Top 1 Used Champion Icon">
             </div>
             <ul>
-                <li><strong>Top 1 Used Champion:</strong> {{ top_1_used_champ }}</li>
-                <li><strong>Top 2 Used Champion:</strong> {{ top_2_used_champ }}</li>
+                <li><strong>Top 1 Used Champion:</strong> Yummy</li>
+                <li><strong>Top 2 Used Champion:</strong> Teemo</li>
             </ul>
             <ul>
                 <h3>Top 3 Mastery</h3>
-                <li><strong>Top 1 Mastery:</strong> {{ name }} {{ amount }}</li>
-                <li><strong>Top 2 Mastery:</strong> {{ name }} {{ amount }}</li>
-                <li><strong>Top 3 Mastery:</strong> {{ name }} {{ amount }}</li>
+                <li><strong>Top 1 Mastery:</strong> Yummy 203549872304</li>
+                <li><strong>Top 2 Mastery:</strong> Teemo 485283405</li>
+                <li><strong>Top 3 Mastery:</strong> Master Yi 1</li>
             </ul>
         </section>
         <section class="top-5-best-wr-with-champ">
@@ -82,9 +82,9 @@
                 </thead>
                  <tbody>
                     <tr>
-                        <td>{{ player.name }}</td>
-                        <td>{{ player.wr }}%</td>
-                        <td>{{ player.region }}</td>
+                        <td>Uknown</td>
+                        <td>0%</td>
+                        <td>LAS</td>
                     </tr>
                     
                 </tbody> 
@@ -92,7 +92,7 @@
         </section>
         <section class="champion-lore">
             <h2>Champion Lore</h2>
-            <p>{{ wiki_info.lore }}</p>
+            <p>GG WP FF15 pls</p>
         </section>
     </main>
     <footer>
