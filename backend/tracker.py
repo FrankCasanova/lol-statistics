@@ -3,7 +3,7 @@ import asyncio
 from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
 from curl_cffi.requests import AsyncSession
-from setting import *
+from .setting import *
 from asyncio import WindowsSelectorEventLoopPolicy
 #TODO:
 #URGENT, TRACKER HAS AN API, WE NEED THE WAY TO TAKE THE DATA FROM THE API
