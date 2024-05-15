@@ -63,7 +63,6 @@ main {
 }
 
 /* Section Styles */
-/* Section Styles */
 section {
     display: flex;
     flex-direction: column;
@@ -83,7 +82,7 @@ section::before {
     left: -100%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 80%);
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 60%);
     transition: all 0.5s ease;
     pointer-events: none; /* Ensure the pseudo-element doesn't interfere with pointer events */
     transform: translate(-50%, -50%) rotate(45deg); /* Initial position */
