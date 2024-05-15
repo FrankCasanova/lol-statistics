@@ -3,7 +3,11 @@ import asyncio
 from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
 from curl_cffi.requests import AsyncSession
-from .setting import *
+from setting import *
+from asyncio import WindowsSelectorEventLoopPolicy
+
+
+asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
 
 def get_rank(mmr, thresholds=MMR_THRESHOLDS, ranks=RANKS):
@@ -34,7 +38,7 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
 
     print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)  
-    print(f'Connection established, status: {response.status}')
+    print(f'Connection established, status: {response.status_code}')
     html = HTMLParser(await response.text())
         
     keys = [
@@ -82,7 +86,7 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
     url = f"{WIKI_BASE_URL}{top_1_used_champ.replace(' ', '_')}/LoL#Hide_"
     print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)
-    print(f'Connection established, status: {response.status}')
+    print(f'Connection established, status: {response.status_code}')
     html = HTMLParser(await response.text())
     lore = html.css_first('div.skinviewer-info-lore > div:nth-child(1)')
     return {'lore': lore.text if lore is not None else 'Lore Not Found'}
