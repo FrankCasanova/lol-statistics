@@ -19,7 +19,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/api/v1/playerprofile-data{name}")
+@app.get("/api/v1/playerprofile-data?name={name}")
 async def tracker(name: str):
     print(name)
     return await main(name)
