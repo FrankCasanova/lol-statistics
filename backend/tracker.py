@@ -9,18 +9,20 @@ from asyncio import WindowsSelectorEventLoopPolicy
 
 asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
+def get_rank(mmr):
 
-def get_rank(mmr, thresholds=MMR_THRESHOLDS, ranks=RANKS):
-
-    index = bisect.bisect_right(thresholds, mmr)
-    return ranks[index] if index < len(ranks) else 'challenger'
+    index = bisect.bisect_right(TRESHOLDS, mmr)
+    return RANKS[index] if index < len(RANKS) else 'challenger'
 
 async def mmr(name: str, session: AsyncSession) -> dict:
-    url = f"{API_BASE_URL}{name.replace(' ', '%20')}/420".replace('#', '%40')
+    url = f"{URL_MMR}{name}/420".replace('#', '%40').replace(' ', '%20')
     response = await session.get(url, headers=MMR_HEADERS)
-    json_data = await response.json()
-    return {'mmr': json_data.get('mmr', 0), 'rank': get_rank(json_data.get('mmr', 0))}
-        
+    json_data =  response.json()
+    mmr = json_data.get("mmr")
+    return {
+        'mmr': mmr if mmr is not None else 0,
+        'rank': get_rank(mmr) if mmr is not None else 'n/a'
+    }
 
 
 async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
@@ -39,35 +41,42 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
     print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)  
     print(f'Connection established, status: {response.status_code}')
-    html = HTMLParser(await response.text())
+    html = HTMLParser(response.text)
+    
+    while not html.css_first('span.fit-text-parent > span'):
+        await asyncio.sleep(5)
+        html = await session.get(url, helpers=DEFAULT_HEADERS)
         
-    keys = [
-        ('name', 'span.fit-text-parent > span'),
-        ('win_rate', 'div.trn-profile-highlighted-content__stats > div:nth-child(3) > span.stat__value'),
-        ('rank', 'div.trn-profile-highlighted-content__stats > div:nth-child(2) > span.stat__label'),
-        ('lp', 'div.trn-profile-highlighted-content__stats > div:nth-child(2) > span.stat__value'),
-        ('top_1_used_champ', 'div.champions__list > div:nth-child(1) > div.info > div.left > div.name'),
-        ('top_2_used_champ', 'div.champions__list > div:nth-child(2) > div.info > div.left > div.name'),
-        ('main_role', 'div > div.role__wr > div.role__role'),
-        ('player_score', 'div.score__text > div.value'),
-        ('kill_participation', 'div.performance-score__stats > div:nth-child(2) > div.stat__value'),
-        ('objetive_participation', 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(3) > div.stat__value'),
-        ('xp_diff_vs_enemy', 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(4) > div.stat__value'),
-        ('profile_image', 'div.user-avatar.user-avatar--large.ph-avatar > img.user-avatar__image'),
-        ('rank_image', 'div.trn-profile-highlighted-content__stats > img.role-icon'),
-        ('top_1_used_champ_image', 'div.champions__list > div:nth-child(1) > div.icon.cursor-pointer > img.champion-icon'),
-        ('top_2_used_champ_image', 'div.champions__list > div:nth-child(2) > div.icon.cursor-pointer > img.champion-icon'),	
-    ]
+    
+    selectors = {
+        'name': 'span.fit-text-parent > span',
+        'win_rate': 'div.trn-profile-highlighted-content__stats > div:nth-child(3) > span.stat__value',
+        'rank': 'div.trn-profile-highlighted-content__stats > div:nth-child(2) > span.stat__label',
+        'lp': 'div.trn-profile-highlighted-content__stats > div:nth-child(2) > span.stat__value',
+        'top_1_used_champ': 'div.champions__list > div:nth-child(1) > div.info > div.left > div.name',
+        'top_2_used_champ': 'div.champions__list > div:nth-child(2) > div.info > div.left > div.name',
+        'main_role': 'div > div.role__wr > div.role__role',
+        'player_score': 'div.score__text > div.value',
+        'kill_participation': 'div.performance-score__stats > div:nth-child(2) > div.stat__value',
+        'objective_participation': 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(3) > div.stat__value',
+        'xp_diff_vs_enemy': 'div.performance-score > div.performance-score__container > div.performance-score__stats > div:nth-child(4) > div.stat__value',
+        'profile_image': 'div.user-avatar.user-avatar--large.ph-avatar > img.user-avatar__image',
+        'rank_image': 'div.trn-profile-highlighted-content__stats > img',
+        'top_1_used_champ_image': 'div.champions__list > div:nth-child(1) > div.icon.cursor-pointer > img',
+        'top_2_used_champ_image': 'div.champions__list > div:nth-child(2) > div.icon.cursor-pointer > img',
+    }
     
     result = {}
-    for key, selector in keys:
-        if key == 'rank_image' or key == 'profile_image' or key == 'top_1_used_champ_image' or key == 'top_2_used_champ_image':
-            result[key] = html.css_first(selector).attributes['src']
-            continue
+    for key, selector in selectors.items():
         try:
-            result[key] = html.css_first(selector).text()
-        except:
+            if 'image' in key:
+                element = html.css_first(selector)
+                result[key] = element.attributes['src'] if element else 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
+            else:
+                result[key] = html.css_first(selector).text()
+        except AttributeError:
             result[key] = f'{key.capitalize()} Not Found'
+    
     return result
     
         
@@ -83,14 +92,22 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
     Returns:
         dict[str, str]: A dictionary containing the wiki information. The keys are 'lore' and the value is a string.
     """
-    url = f"{WIKI_BASE_URL}{top_1_used_champ.replace(' ', '_')}/LoL#Hide_"
-    print(f'Establishing connection to {url}...')
-    response = await session.get(url, headers=DEFAULT_HEADERS)
-    print(f'Connection established, status: {response.status_code}')
-    html = HTMLParser(await response.text())
-    lore = html.css_first('div.skinviewer-info-lore > div:nth-child(1)')
-    return {'lore': lore.text if lore is not None else 'Lore Not Found'}
+    try:
+        url = f'{URL_WIKI}{top_1_used_champ.replace(" ", "_")}/LoL#Hide_'
+        print(f'Establishing connection to {url}...')
+        response = await session.get(url, headers=DEFAULT_HEADERS)
+        print(f'Connection established, status: {response.status_code}')
+        html = HTMLParser(response.text)
         
+        lore = html.css_first('div.skinviewer-info-lore > div:nth-child(1)').text()
+        
+        return {
+            'lore': lore
+        }
+    except:
+        return {
+            'lore': 'Lore Not Found'	
+        }
 
     
 
@@ -105,7 +122,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         dict[str, str]: A dictionary containing the brief summary.
     """
     try:
-        url = f'{LOLALYTICS_BASE_URL}{top_1_used_champ.lower().replace(" ", "")}/build/'
+        url = f'{URL_INGSINGFULL_INFO}{top_1_used_champ.lower().replace(" ", "")}/build/'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         html = HTMLParser(await response.text())
@@ -138,37 +155,36 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
 
 async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
     try:
-        url = f'{OPGG_BASE_URL}{name.replace(" ", "%20").replace("#", "-")}'
+        url = f'{URL_LADDER_RANK}{name.replace(" ", "%20").replace("#", "-")}'
+        print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         ladder_rank = (await response.text()).split('<div class="rank">')[1].split('</a>')[0].strip()
         return {'ladder_rank': ladder_rank}
     except:
         return {'ladder_rank': 'n/a'}
 
-
-
-async def mastery(name: str, session: AsyncSession) -> dict[str, list[dict[str, str]]]:
+async def mastery(name: str, session: AsyncSession) -> dict:
     try:
-        url = f'{CHAMPION_MASTERY_BASE_URL}{name.replace(" ", "+").replace("#", "%23")}&region=EUW&lang=en_US'
-        print(f'Establishing connection to {url}...')
+        url = f'{URL_MASTERY}{name.replace(" ", "+").replace("#", "%23")}&region=EUW&lang=en_US'
         response = await session.get(url, headers=DEFAULT_HEADERS)
-        print(f'Connection established, status: {response.status_code}')
-        html = HTMLParser(await response.text())
-        top_3_mastery = [
-            {
-                'name': html.css_first(f'#tbody > tr:nth-child({i+1}) > td:nth-child(1) > a').text(),
-                'amount': html.css_first(f'#tbody > tr:nth-child({i+1}) > td:nth-child(3)').text()
-            }
-            for i in range(3)
-        ]
-        return {
-            'top_3_mastery': top_3_mastery
-        }
-    except:
-        return {'top_3_mastery': [{
-            'name': 'n/a',
-            'amount': 'n/a'
-        }]}
+        html = HTMLParser(response.text)
+        
+        top_3_mastery = []
+        for i in range(3):
+            mastery_name_element = html.css_first(f'#tbody > tr:nth-child({i+1}) > td:nth-child(1) > a')
+            mastery_amount_element = html.css_first(f'#tbody > tr:nth-child({i+1}) > td:nth-child(3)')
+            if mastery_name_element and mastery_amount_element:
+                mastery_name = mastery_name_element.text()
+                mastery_amount = mastery_amount_element.text()
+                top_3_mastery.append({'name': mastery_name, 'amount': mastery_amount})
+            else:
+                break  # Break the loop if the elements are not found
+        
+        return {'top_3_mastery': top_3_mastery}
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {'top_3_mastery': [{'name': 'n/a', 'amount': 'n/a'}]}
+
         
         
 
@@ -193,7 +209,9 @@ async def main(name: str) -> dict[str, dict]:
         ladder_rank_result = results[3]
         mastery_result = results[4]
     
+        await session.close()
         
+
         return {
             'champ_info': champ_info_result,
             'wiki_info': wiki_info_result,
