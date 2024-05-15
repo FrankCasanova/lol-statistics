@@ -1,33 +1,33 @@
-from selectolax.parser import HTMLParser
-from curl_cffi.requests import AsyncSession
-import asyncio
-from asyncio import WindowsSelectorEventLoopPolicy
-from setting import DEFAULT_HEADERS
-import pprint
+# from selectolax.parser import HTMLParser
+# from curl_cffi.requests import AsyncSession
+# import asyncio
+# from asyncio import WindowsSelectorEventLoopPolicy
+# from setting import DEFAULT_HEADERS
+# import pprint
 
-asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
-session = AsyncSession()
+# asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+# session = AsyncSession()
 
-async def tags(name: str, session: AsyncSession) -> dict[str, str]:
-    try:
-        url = f'https://www.leagueofgraphs.com/summoner/euw/{name.replace(" ", "%20").replace("#", "-")}'
-        print(f'Establishing connection to {url}...')
-        response = await session.get(url, headers=DEFAULT_HEADERS)
-        print(f'Connection established, status: {response.status_code}')
-        html = HTMLParser(response.text)
-        pprint.pprint(html.text())
-        tags = html.css('.tags-box')
-        texts = [div.text(deep=True, separator='', strip=True) for div in tags]
-        return {
-            'tags': texts
-        }
-    except:
-        return {'error': 'there was some trouble fetching the tags'}
-
-
+# async def tags(name: str, session: AsyncSession) -> dict[str, str]:
+#     try:
+#         url = f'https://www.leagueofgraphs.com/summoner/euw/{name.replace(" ", "%20").replace("#", "-")}'
+#         print(f'Establishing connection to {url}...')
+#         response = await session.get(url, headers=DEFAULT_HEADERS)
+#         print(f'Connection established, status: {response.status_code}')
+#         html = HTMLParser(response.text)
+#         pprint.pprint(html.text())
+#         tags = html.css('.tags-box')
+#         texts = [div.text(deep=True, separator='', strip=True) for div in tags]
+#         return {
+#             'tags': texts
+#         }
+#     except:
+#         return {'error': 'there was some trouble fetching the tags'}
 
 
-asyncio.run(tags('CHADUDYR#UDYR', session))
+
+
+# asyncio.run(tags('CHADUDYR#UDYR', session))
 
 
 
