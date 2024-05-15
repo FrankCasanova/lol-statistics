@@ -4,15 +4,7 @@ from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
 from curl_cffi.requests import AsyncSession
 from .setting import *
-# from asyncio import WindowsSelectorEventLoopPolicy
-#TODO:
-#URGENT, TRACKER HAS AN API, WE NEED THE WAY TO TAKE THE DATA FROM THE API
-#1. install fastapi
-#2. install uvicorn
-#3. create an endpoint for the tracker
-#4. create the frontend
 
-# asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
 def get_rank(mmr, thresholds=MMR_THRESHOLDS, ranks=RANKS):
 
