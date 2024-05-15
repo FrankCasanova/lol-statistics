@@ -4,10 +4,10 @@ from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
 from curl_cffi.requests import AsyncSession
 from .setting import *
-# from asyncio import WindowsSelectorEventLoopPolicy
+from asyncio import WindowsSelectorEventLoopPolicy
 
 
-# asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
 def get_rank(mmr):
 
@@ -125,27 +125,29 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         url = f'{URL_INGSINGFULL_INFO}{top_1_used_champ.lower().replace(" ", "")}/build/'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
-        html = HTMLParser(await response.text())
+        html = HTMLParser(response.text)
         
         brief_summary = html.css_first('div.flex-1 > p').text() 
-        data_about_champ = html.css_first('div:nth-child(7) > div > h2').text() + ' ' + \
-                            html.css_first('div:nth-child(7) > div > h1').text() + ' ' + \
-                            html.css_first('div:nth-child(7) > div > div > p:nth-child(1)').text() + ' ' + \
-                            html.css_first('div:nth-child(7) > div > div > p:nth-child(2)').text() + ' ' + \
-                            html.css_first('div:nth-child(7) > div > div > p:nth-child(3)').text()
+        data_about_champ = html.css_first('div:nth-child(7) > div > h2').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > h1').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(1)').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(2)').text()
+        data_about_champ += ' ' + html.css_first('div:nth-child(7) > div > div > p:nth-child(3)').text()
         top_5_best_wr_with_champ = []
         for i in range(5):
             champ_info = {
                 'name': html.css_first(f'div:nth-child({i+2}) > div.flex.w-\[100px\].flex-none.items-center.justify-center.truncate > a').text(),
                 'wr': html.css_first(f'div:nth-child({i+2}) > div.flex.w-8.flex-none.items-center.justify-center').text(),
                 'region': html.css_first(f'div:nth-child({i+2}) > div.w-\[35px\].flex-none > div > div').text()
-            }
+            }       
             top_5_best_wr_with_champ.append(champ_info)
 
+            
+        
         return {
             'brief_summary': brief_summary,
             'data_about_champ': data_about_champ,
-            'top_5_best_wr_with_champ': top_5_best_wr_with_champ
+            'top_5_best_wr_with_champ': top_5_best_wr_with_champ 
         }
     except:
         return {'brief_summary': 'n/a',
@@ -158,7 +160,8 @@ async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
         url = f'{URL_LADDER_RANK}{name.replace(" ", "%20").replace("#", "-")}'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
-        ladder_rank = (await response.text()).split('<div class="rank">')[1].split('</a>')[0].strip()
+        html = HTMLParser(response.text)
+        ladder_rank = html.css_first('div.info > div.team-and-rank > div.rank > a').text()
         return {'ladder_rank': ladder_rank}
     except:
         return {'ladder_rank': 'n/a'}
