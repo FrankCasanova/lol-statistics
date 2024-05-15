@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from tracker import main
+from .tracker import main
 
 
 app = FastAPI()

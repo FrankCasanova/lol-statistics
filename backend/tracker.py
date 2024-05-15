@@ -3,7 +3,7 @@ import asyncio
 from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
 from curl_cffi.requests import AsyncSession
-from setting import *
+from .setting import *
 from asyncio import WindowsSelectorEventLoopPolicy
 
 
@@ -36,7 +36,7 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
         dict[str, str]: A dictionary containing the champion information. The keys are 'name', 'win_rate', 'rank', 'lp', 'top_1_used_champ', 'top_2_used_champ', 'main_role', 'player_score', 'kill_participation', 'objetive_participation', and 'xp_diff_vs_enemy'.
     """
     
-    url = f"{TRACKER_BASE_URL}{name}/overview?playlist=RANKED_SOLO_5x5".replace('#', '%23').replace(' ', '%20')
+    url = f"{URL_CHAMP_INFO}{name}/overview?playlist=RANKED_SOLO_5x5".replace('#', '%23').replace(' ', '%20')
 
     print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)  
