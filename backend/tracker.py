@@ -4,10 +4,10 @@ from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
 from curl_cffi.requests import AsyncSession
 from .setting import *
-from asyncio import WindowsSelectorEventLoopPolicy
+# from asyncio import WindowsSelectorEventLoopPolicy
 
 
-asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
+# asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
 def get_rank(mmr):
 
