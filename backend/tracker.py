@@ -2,9 +2,8 @@
 import asyncio  
 from selectolax.lexbor import LexborHTMLParser as HTMLParser
 import bisect
-import json
 from curl_cffi.requests import AsyncSession
-from setting import MMR_HEADERS, DEFAULT_HEADERS
+from setting import *
 from asyncio import WindowsSelectorEventLoopPolicy
 #TODO:
 #URGENT, TRACKER HAS AN API, WE NEED THE WAY TO TAKE THE DATA FROM THE API
@@ -16,15 +15,13 @@ from asyncio import WindowsSelectorEventLoopPolicy
 asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
 def get_rank(mmr):
-    thresholds = [125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375, 1500, 1625, 1750, 1875, 2000, 2125, 2250, 2375, 2500, 2625, 2750, 2875, 3000, 3125, 3250, 3375, 3500, 4000, 5000]
-    ranks = ['iron-iv', 'iron-iii', 'iron-ii', 'iron-i', 'bronze-iv', 'bronze-iii', 'bronze-ii', 'bronze-i', 'silver-iv', 'silver-iii', 'silver-ii', 'silver-i', 'gold-iv', 'gold-iii', 'gold-ii', 'gold-i', 'platinum-iv', 'platinum-iii', 'platinum-ii', 'platinum-i', 'emerald-iv', 'emerald-iii', 'emerald-ii', 'emerald-i', 'diamond-iv', 'diamond-iii', 'diamond-ii', 'diamond-i', 'master', 'grandmaster', 'challenger']
 
-    index = bisect.bisect_right(thresholds, mmr)
-    return ranks[index] if index < len(ranks) else 'challenger'
+    index = bisect.bisect_right(TRESHOLDS, mmr)
+    return RANKS[index] if index < len(RANKS) else 'challenger'
 
 async def mmr(name: str, session: AsyncSession) -> dict:
     try:
-        url = f"https://api.mylolmmr.com/api/mmr/euw1/{name}/420".replace('#', '%40').replace(' ', '%20')
+        url = f"{URL_MMR}{name}/420".replace('#', '%40').replace(' ', '%20')
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=MMR_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -86,7 +83,11 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
     result = {}
     for key, selector in keys:
         if key == 'rank_image' or key == 'profile_image' or key == 'top_1_used_champ_image' or key == 'top_2_used_champ_image':
-            result[key] = html.css_first(selector).attributes['src']
+            image_element = html.css_first(selector)
+            if image_element:
+                result[key] = image_element.attributes['src']
+            else:
+                result[key] = 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
             continue
         try:
             result[key] = html.css_first(selector).text()
@@ -107,7 +108,7 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
         dict[str, str]: A dictionary containing the wiki information. The keys are 'lore' and the value is a string.
     """
     try:
-        url = f'https://leagueoflegends.fandom.com/wiki/{top_1_used_champ.replace(" ", "_")}/LoL#Hide_'
+        url = f'{URL_WIKI}{top_1_used_champ.replace(" ", "_")}/LoL#Hide_'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -136,7 +137,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
         dict[str, str]: A dictionary containing the brief summary.
     """
     try:
-        url = f'https://lolalytics.com/lol/{top_1_used_champ.lower().replace(" ", "")}/build/'
+        url = f'{URL_INGSINGFULL_INFO}{top_1_used_champ.lower().replace(" ", "")}/build/'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -171,7 +172,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
 
 async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
     try:
-        url = f'https://www.op.gg/summoners/euw/{name.replace(" ", "%20").replace("#", "-")}'
+        url = f'{URL_LADDER_RANK}{name.replace(" ", "%20").replace("#", "-")}'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
@@ -185,7 +186,7 @@ async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
 
 async def mastery(name: str, session: AsyncSession) -> dict[str, str]:
     try:
-        url = f'https://championmastery.gg/player?riotId={name.replace(" ", "+").replace("#", "%23")}&region=EUW&lang=en_US'
+        url = f'{URL_MASTERY}{name.replace(" ", "+").replace("#", "%23")}&region=EUW&lang=en_US'
         print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         print(f'Connection established, status: {response.status_code}')
