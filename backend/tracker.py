@@ -212,13 +212,6 @@ async def main(name: str) -> dict[str, dict]:
         print(f'An error occurred in the main function: {e}')
         return {}
 
-# if __name__ == "__main__":
-#     with open('result.json', 'w') as file:
-#         file.write('')
-    
-#     result = asyncio.run(main('CHADUDYR#UDYR'))
-    
-#     with open('result.json', 'a') as file:
-#         json.dump(result, file)
+
     
 
