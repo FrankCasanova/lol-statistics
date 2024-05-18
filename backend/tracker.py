@@ -38,7 +38,7 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
     
     url = f"{URL_CHAMP_INFO}{name}/overview?playlist=RANKED_SOLO_5x5".replace('#', '%23').replace(' ', '%20')
 
-    print(f'Establishing connection to {url}...')
+    # print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)  
     print(f'Connection established, status: {response.status_code}')
     html = HTMLParser(response.text)
@@ -94,9 +94,9 @@ async def wiki_info(top_1_used_champ: str, session: AsyncSession) -> dict[str, s
     """
     try:
         url = f'{URL_WIKI}{top_1_used_champ.replace(" ", "_")}/LoL#Hide_'
-        print(f'Establishing connection to {url}...')
+        # print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
-        print(f'Connection established, status: {response.status_code}')
+        # print(f'Connection established, status: {response.status_code}')
         html = HTMLParser(response.text)
         
         lore = html.css_first('div.skinviewer-info-lore > div:nth-child(1)').text()
@@ -123,7 +123,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
     """
     try:
         url = f'{URL_INGSINGFULL_INFO}{top_1_used_champ.lower().replace(" ", "")}/build/'
-        print(f'Establishing connection to {url}...')
+        # print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         html = HTMLParser(response.text)
         
@@ -158,7 +158,7 @@ async def ingsingfull_info(top_1_used_champ: str, session: AsyncSession) -> dict
 async def ladder_rank(name: str, session: AsyncSession) -> dict[str, str]:
     try:
         url = f'{URL_LADDER_RANK}{name.replace(" ", "%20").replace("#", "-")}'
-        print(f'Establishing connection to {url}...')
+        # print(f'Establishing connection to {url}...')
         response = await session.get(url, headers=DEFAULT_HEADERS)
         html = HTMLParser(response.text)
         ladder_rank = html.css_first('div.info > div.team-and-rank > div.rank > a').text()
