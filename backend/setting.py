@@ -22,13 +22,13 @@ MMR_HEADERS = {
     "sec-fetch-site": "same-origin",
 }
 
-# Define constants for URLs and headers
-API_BASE_URL = "https://api.mylolmmr.com/api/mmr/euw1/"
-TRACKER_BASE_URL = "https://tracker.gg/lol/profile/riot/EUW/"
-WIKI_BASE_URL = "https://leagueoflegends.fandom.com/wiki/"
-LOLALYTICS_BASE_URL = "https://lolalytics.com/lol/"
-OPGG_BASE_URL = "https://www.op.gg/summoners/euw/"
-CHAMPION_MASTERY_BASE_URL = "https://championmastery.gg/player?riotId="
-
-MMR_THRESHOLDS = [125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375, 1500, 1625, 1750, 1875, 2000, 2125, 2250, 2375, 2500, 2625, 2750, 2875, 3000, 3125, 3250, 3375, 3500, 4000, 5000]
+TRESHOLDS = [125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375, 1500, 1625, 1750, 1875, 2000, 2125, 2250, 2375, 2500, 2625, 2750, 2875, 3000, 3125, 3250, 3375, 3500, 4000, 5000]
 RANKS = ['iron-iv', 'iron-iii', 'iron-ii', 'iron-i', 'bronze-iv', 'bronze-iii', 'bronze-ii', 'bronze-i', 'silver-iv', 'silver-iii', 'silver-ii', 'silver-i', 'gold-iv', 'gold-iii', 'gold-ii', 'gold-i', 'platinum-iv', 'platinum-iii', 'platinum-ii', 'platinum-i', 'emerald-iv', 'emerald-iii', 'emerald-ii', 'emerald-i', 'diamond-iv', 'diamond-iii', 'diamond-ii', 'diamond-i', 'master', 'grandmaster', 'challenger']
+
+
+URL_MMR = 'https://api.mylolmmr.com/api/mmr/euw1/'
+URL_CHAMP_INFO = 'https://tracker.gg/lol/profile/riot/EUW/'
+URL_WIKI = 'https://leagueoflegends.fandom.com/wiki/'
+URL_INGSINGFULL_INFO = 'https://lolalytics.com/lol/'
+URL_LADDER_RANK = 'https://www.op.gg/summoners/euw/'
+URL_MASTERY = 'https://championmastery.gg/player?riotId='
