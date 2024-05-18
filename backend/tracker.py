@@ -40,7 +40,7 @@ async def champ_info(name: str, session: AsyncSession) -> dict[str, str]:
 
     # print(f'Establishing connection to {url}...')
     response = await session.get(url, headers=DEFAULT_HEADERS)  
-    print(f'Connection established, status: {response.status_code}')
+    # print(f'Connection established, status: {response.status_code}')
     html = HTMLParser(response.text)
     
     while not html.css_first('span.fit-text-parent > span'):
